@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		24F460681B6469C000887E97 /* FeedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F460671B6469C000887E97 /* FeedTableViewController.swift */; };
+		24F4606A1B65C66A00887E97 /* FeedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F460691B65C66A00887E97 /* FeedTableViewCell.swift */; };
+		24F4606C1B65EDD700887E97 /* AddHashtagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F4606B1B65EDD700887E97 /* AddHashtagTableViewCell.swift */; };
+		24F4606E1B65EDF100887E97 /* AddHashtagTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F4606D1B65EDF100887E97 /* AddHashtagTableViewController.swift */; };
 		673743AA1B62B31E00BE3E41 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673743A91B62B31E00BE3E41 /* AppDelegate.swift */; };
 		673743AF1B62B31E00BE3E41 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 673743AD1B62B31E00BE3E41 /* Main.storyboard */; };
 		673743B11B62B31E00BE3E41 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 673743B01B62B31E00BE3E41 /* Images.xcassets */; };
@@ -43,6 +47,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		24F460671B6469C000887E97 /* FeedTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedTableViewController.swift; sourceTree = "<group>"; };
+		24F460691B65C66A00887E97 /* FeedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedTableViewCell.swift; sourceTree = "<group>"; };
+		24F4606B1B65EDD700887E97 /* AddHashtagTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddHashtagTableViewCell.swift; sourceTree = "<group>"; };
+		24F4606D1B65EDF100887E97 /* AddHashtagTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddHashtagTableViewController.swift; sourceTree = "<group>"; };
 		673743A41B62B31E00BE3E41 /* HashtagWatcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HashtagWatcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		673743A81B62B31E00BE3E41 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		673743A91B62B31E00BE3E41 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -150,6 +158,10 @@
 				673743A71B62B31E00BE3E41 /* Supporting Files */,
 				673743E91B62E34500BE3E41 /* MasterTableViewController.swift */,
 				673743EB1B62E35B00BE3E41 /* MasterTableViewCell.swift */,
+				24F460671B6469C000887E97 /* FeedTableViewController.swift */,
+				24F460691B65C66A00887E97 /* FeedTableViewCell.swift */,
+				24F4606B1B65EDD700887E97 /* AddHashtagTableViewCell.swift */,
+				24F4606D1B65EDF100887E97 /* AddHashtagTableViewController.swift */,
 			);
 			path = HashtagWatcher;
 			sourceTree = "<group>";
@@ -228,6 +240,7 @@
 				TargetAttributes = {
 					673743A31B62B31E00BE3E41 = {
 						CreatedOnToolsVersion = 6.3.2;
+						DevelopmentTeam = 8F7JP97CCF;
 					};
 					673743B81B62B31E00BE3E41 = {
 						CreatedOnToolsVersion = 6.3.2;
@@ -279,9 +292,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24F4606C1B65EDD700887E97 /* AddHashtagTableViewCell.swift in Sources */,
 				673743AA1B62B31E00BE3E41 /* AppDelegate.swift in Sources */,
 				673743EC1B62E35B00BE3E41 /* MasterTableViewCell.swift in Sources */,
 				673743EA1B62E34500BE3E41 /* MasterTableViewController.swift in Sources */,
+				24F460681B6469C000887E97 /* FeedTableViewController.swift in Sources */,
+				24F4606A1B65C66A00887E97 /* FeedTableViewCell.swift in Sources */,
+				24F4606E1B65EDF100887E97 /* AddHashtagTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -410,6 +427,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/HashtagWatcher.xcodeproj",
@@ -417,6 +436,7 @@
 				INFOPLIST_FILE = HashtagWatcher/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -424,6 +444,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/HashtagWatcher.xcodeproj",
@@ -431,6 +453,7 @@
 				INFOPLIST_FILE = HashtagWatcher/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -487,6 +510,7 @@
 				673743C51B62B31E00BE3E41 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		673743C61B62B31E00BE3E41 /* Build configuration list for PBXNativeTarget "HashtagWatcherTests" */ = {
 			isa = XCConfigurationList;
@@ -495,6 +519,7 @@
 				673743C81B62B31E00BE3E41 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="MmU-XI-d8T">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="FFD-9G-3py">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Master Table View Controller-->
+        <!--Hashtags-->
         <scene sceneID="bNc-g1-Z4h">
             <objects>
                 <tableViewController id="oPR-2Z-hrm" customClass="MasterTableViewController" customModule="HashtagWatcher" customModuleProvider="target" sceneMemberID="viewController">
@@ -13,11 +14,26 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="ahI-FY-6KL">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="hashtagCell" id="ahI-FY-6KL" customClass="MasterTableViewCell" customModule="HashtagWatcher" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ahI-FY-6KL" id="MhX-s3-RfF">
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bPx-lu-WFG">
+                                            <rect key="frame" x="8" y="11" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="bPx-lu-WFG" firstAttribute="leading" secondItem="MhX-s3-RfF" secondAttribute="leadingMargin" constant="-7" id="3Yk-71-IP2"/>
+                                        <constraint firstItem="bPx-lu-WFG" firstAttribute="centerY" secondItem="MhX-s3-RfF" secondAttribute="centerY" id="gIC-NM-Wcp"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="hashtagLabel" destination="bPx-lu-WFG" id="3ek-e9-Qhw"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -25,29 +41,164 @@
                             <outlet property="delegate" destination="oPR-2Z-hrm" id="bfH-gT-Iy9"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="1yh-wc-OB9"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Hashtags" id="1yh-wc-OB9">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="86k-CN-ZJO">
+                            <connections>
+                                <segue destination="f7i-kI-n5f" kind="show" identifier="addHashtag" id="EX4-Ao-OoF"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <segue destination="ahh-XU-lUv" kind="show" identifier="viewFeed" id="UdH-jc-DVU"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7wx-Pz-eom" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="418" y="-1261"/>
+            <point key="canvasLocation" x="1230" y="-1261"/>
+        </scene>
+        <!--Add Hashtag-->
+        <scene sceneID="JrO-Bb-lgu">
+            <objects>
+                <tableViewController id="mrs-1c-Mvu" customClass="AddHashtagTableViewController" customModule="HashtagWatcher" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="126" sectionHeaderHeight="22" sectionFooterHeight="22" id="hHu-dP-FFX">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="126" id="mdC-L4-RKV" customClass="AddHashtagTableViewCell" customModule="HashtagWatcher" customModuleProvider="target">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mdC-L4-RKV" id="dnR-aT-Oz0">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="hashtag" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Dl2-tC-g7c">
+                                            <rect key="frame" x="39" y="48" width="539" height="30"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="#" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7CG-Mf-7x9">
+                                            <rect key="frame" x="23" y="52" width="14" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="addHashtagTextField" destination="Dl2-tC-g7c" id="G9J-P3-yFs"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="mrs-1c-Mvu" id="NLd-gl-Zqu"/>
+                            <outlet property="delegate" destination="mrs-1c-Mvu" id="5fi-BH-yeC"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Add Hashtag" id="in3-Qt-jXI">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="x6I-rx-IyE"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="aMi-Rr-YL6">
+                            <connections>
+                                <action selector="saveHashtag:" destination="mrs-1c-Mvu" id="XpQ-L0-tgQ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ffR-rh-Vyu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2753" y="-836"/>
+        </scene>
+        <!--Feed-->
+        <scene sceneID="odh-Ez-Gla">
+            <objects>
+                <tableViewController id="L1G-JS-feV" customClass="FeedTableViewController" customModule="HashtagWatcher" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="UfJ-er-Hpe">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="dfK-ns-YSD" customClass="FeedTableViewCell" customModule="HashtagWatcher" customModuleProvider="target">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dfK-ns-YSD" id="tzi-o3-VTe">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Hashtag" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rhN-B1-53i">
+                                            <rect key="frame" x="54" y="11" width="74" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="feedTitle" destination="rhN-B1-53i" id="oZa-dc-ZAR"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="L1G-JS-feV" id="ne7-Ha-Pqc"/>
+                            <outlet property="delegate" destination="L1G-JS-feV" id="HtS-tn-nSd"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Feed" id="36N-oR-aLV"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3h9-jn-Ifr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2753" y="-1535"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="5E0-J6-E9j">
+        <scene sceneID="iyZ-bU-agz">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="MmU-XI-d8T" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="FFD-9G-3py" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="MuR-SN-aSh">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="PDc-2K-UP0">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="oPR-2Z-hrm" kind="relationship" relationship="rootViewController" id="Xgw-Ri-YEY"/>
+                        <segue destination="oPR-2Z-hrm" kind="relationship" relationship="rootViewController" id="6Bh-dH-7x3"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jve-lD-8GB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gTl-Mm-EVP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-394" y="-1261"/>
+            <point key="canvasLocation" x="418" y="-1261"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="oxZ-Zf-7zf">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="f7i-kI-n5f" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="YOa-N5-z6I">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="mrs-1c-Mvu" kind="relationship" relationship="rootViewController" id="Szm-NU-VVf"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="L1i-DH-afx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1941" y="-836"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="GiW-kC-BRt">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ahh-XU-lUv" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="qNR-uF-Are">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="L1G-JS-feV" kind="relationship" relationship="rootViewController" id="d2N-nG-JaD"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="muX-4z-G2L" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1941" y="-1535"/>
         </scene>
     </scenes>
 </document>

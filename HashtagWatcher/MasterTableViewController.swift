@@ -7,9 +7,15 @@
 //
 
 import UIKit
+import Parse
+import ParseUI
 
-class MasterTableViewController: UITableViewController {
 
+class MasterTableViewController: UITableViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate {
+
+    var hashtags : NSMutableArray! = NSMutableArray()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -18,6 +24,93 @@ class MasterTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if (PFUser.currentUser() == nil) {
+            var loginViewController = PFLogInViewController()
+            loginViewController.delegate = self
+            var signupViewController = PFSignUpViewController()
+            signupViewController.delegate = self
+            
+            loginViewController.signUpController = signupViewController
+            self.presentViewController(loginViewController, animated: true, completion: nil)
+        } else {
+            self.fetchAllObjectsFromLocalDatastore()
+            self.fetchAllObjects()
+        }
+    }
+    
+    func fetchAllObjectsFromLocalDatastore() {
+        var query: PFQuery = PFQuery(className: "Hashtag")
+        query.fromLocalDatastore()
+        query.whereKey("username", equalTo: PFUser.currentUser().username)
+        query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+            if (error == nil) {
+                var temp : NSArray = objects as NSArray
+                self.hashtags = temp.mutableCopy() as NSMutableArray
+                self.tableView.reloadData()
+            } else {
+                println(error?.userInfo)
+            }
+            
+            
+        }
+    }
+    
+    func fetchAllObjects() {
+        PFObject.unpinAllObjectsInBackgroundWithBlock(nil)
+        var query: PFQuery = PFQuery(className: "Hashtag")
+        query.whereKey("username", equalTo: PFUser.currentUser().username)
+        query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+            if (error == nil) {
+                PFObject.pinAllInBackground(objects, block: nil)
+                self.fetchAllObjectsFromLocalDatastore()
+            } else {
+                println(error?.userInfo)
+            }
+            
+            
+        }
+    }
+    
+    func logInViewController(logInController: PFLogInViewController, shouldBeginLogInWithUsername username: String, password: String) -> Bool {
+        
+        if (!username.isEmpty || !password.isEmpty) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func logInViewController(logInController: PFLogInViewController, didLogInUser user: PFUser) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func logInViewController(logInController: PFLogInViewController, didFailToLogInWithError error: NSError?) {
+        println("Failed to login")
+    }
+    
+    func signUpViewController(signUpController: PFSignUpViewController, shouldBeginSignUp info: [NSObject : AnyObject]) -> Bool {
+        if let password = info["password"] as? String {
+            return count(password.utf16) >= 8
+        } else {
+            return false
+        }
+    }
+    
+    func signUpViewController(signUpController: PFSignUpViewController, didSignUpUser user: PFUser) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func signUpViewController(signUpController: PFSignUpViewController, didFailToSignUpWithError error: NSError?) {
+        println("Failed to signup")
+    }
+    
+    func signUpViewControllerDidCancelSignUp(signUpController: PFSignUpViewController) {
+        println("User dismissed signup")
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,24 +123,45 @@ class MasterTableViewController: UITableViewController {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 0
+        return hashtags.count
     }
 
-    /*
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as! UITableViewCell
-
-        // Configure the cell...
-
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("hashtagCell", forIndexPath: indexPath) as! MasterTableViewCell
+        
+        var object : PFObject = self.hashtags.objectAtIndex(indexPath.row) as PFObject
+        cell.textLabel?.text = "#"+(object["text"] as? String)!
         return cell
     }
-    */
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.performSegueWithIdentifier("viewFeed", sender: self)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        
+        
+        if (segue.identifier == "viewFeed") {
+            var upcoming : FeedTableViewController = segue.destinationViewController as FeedTableViewController
+            let indexPath = self.tableView.indexPathForSelectedRow()!
+            var object: PFObject = self.hashtags.objectAtIndex(indexPath.row) as PFObject
+            upcoming.object = object
+            self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        } else if (segue.identifier == "addHashtag") {
+            var upcoming : AddHashtagTableViewController = segue.destinationViewController as AddHashtagTableViewController
+            let indexPath = self.tableView.indexPathForSelectedRow()
+            self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        }
+    }
+    
 
     /*
     // Override to support conditional editing of the table view.

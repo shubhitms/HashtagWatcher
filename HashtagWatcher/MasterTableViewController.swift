@@ -46,34 +46,40 @@ class MasterTableViewController: UITableViewController, PFLogInViewControllerDel
     func fetchAllObjectsFromLocalDatastore() {
         var query: PFQuery = PFQuery(className: "Hashtag")
         query.fromLocalDatastore()
-        query.whereKey("username", equalTo: PFUser.currentUser().username)
-        query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
-            if (error == nil) {
-                var temp : NSArray = objects as NSArray
-                self.hashtags = temp.mutableCopy() as NSMutableArray
-                self.tableView.reloadData()
-            } else {
-                println(error?.userInfo)
+        if let username = PFUser.currentUser()?.username {
+            query.whereKey("username", equalTo: username)
+            query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+                if (error == nil) {
+                    var temp : NSArray = objects!
+                    self.hashtags = temp.mutableCopy() as! NSMutableArray
+                    self.tableView.reloadData()
+                } else {
+                    println(error?.userInfo)
+                }
+                
+                
             }
-            
-            
         }
+        
     }
     
     func fetchAllObjects() {
         PFObject.unpinAllObjectsInBackgroundWithBlock(nil)
         var query: PFQuery = PFQuery(className: "Hashtag")
-        query.whereKey("username", equalTo: PFUser.currentUser().username)
-        query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
-            if (error == nil) {
-                PFObject.pinAllInBackground(objects, block: nil)
-                self.fetchAllObjectsFromLocalDatastore()
-            } else {
-                println(error?.userInfo)
+        if let username = PFUser.currentUser()?.username {
+            query.whereKey("username", equalTo: username)
+            query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+                if (error == nil) {
+                    PFObject.pinAllInBackground(objects, block: nil)
+                    self.fetchAllObjectsFromLocalDatastore()
+                } else {
+                    println(error?.userInfo)
+                }
+                
+                
             }
-            
-            
         }
+        
     }
     
     func logInViewController(logInController: PFLogInViewController, shouldBeginLogInWithUsername username: String, password: String) -> Bool {
@@ -136,8 +142,8 @@ class MasterTableViewController: UITableViewController, PFLogInViewControllerDel
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("hashtagCell", forIndexPath: indexPath) as! MasterTableViewCell
         
-        var object : PFObject = self.hashtags.objectAtIndex(indexPath.row) as PFObject
-        cell.textLabel?.text = "#"+(object["text"] as? String)!
+        var object : PFObject = self.hashtags.objectAtIndex(indexPath.row) as! PFObject
+        cell.textLabel?.text = "#"+(object["text"] as! String)
         return cell
     }
     
@@ -150,14 +156,14 @@ class MasterTableViewController: UITableViewController, PFLogInViewControllerDel
         
         
         if (segue.identifier == "viewFeed") {
-            var upcoming : FeedTableViewController = segue.destinationViewController as FeedTableViewController
+            var upcoming : FeedTableViewController = segue.destinationViewController as! FeedTableViewController
             let indexPath = self.tableView.indexPathForSelectedRow()!
-            var object: PFObject = self.hashtags.objectAtIndex(indexPath.row) as PFObject
+            var object: PFObject = self.hashtags.objectAtIndex(indexPath.row) as! PFObject
             upcoming.object = object
             self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
         } else if (segue.identifier == "addHashtag") {
-            var upcoming : AddHashtagTableViewController = segue.destinationViewController as AddHashtagTableViewController
-            let indexPath = self.tableView.indexPathForSelectedRow()
+            var upcoming : AddHashtagTableViewController = segue.destinationViewController as! AddHashtagTableViewController
+            let indexPath = self.tableView.indexPathForSelectedRow()!
             self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
         }
     }
